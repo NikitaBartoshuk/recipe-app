@@ -45,13 +45,18 @@ function addMeal(mealData, random = false) {
     meal.innerHTML = `
          <div class="meal-header">
             ${random ? `<span class="random"> Random Recipe </span>` : ""}    
-            <img src="${mealData.strMealThumb}" alt="${mealData.strMeal}"/>
+            <img class="meal-header-image" src="${mealData.strMealThumb}" alt="${mealData.strMeal}"/>
          </div>
          <div class="meal-body">
             <h4>${mealData.strMeal}</h4>
             <button class="fav-btn"><i class="fas fa-heart"></i></button>
          </div>
     `;
+
+    const image = meal.querySelector(".meal-header .meal-header-image");
+    image.addEventListener('click', () => {
+        showMealInfo(mealData)
+    })
 
     const btn = meal.querySelector(".meal-body .fav-btn");
     btn.addEventListener("click", () => {
@@ -65,11 +70,12 @@ function addMeal(mealData, random = false) {
         fetchFavMeals();
     });
 
-    meal.addEventListener('click', () => {
-        showMealInfo(mealData);
-    })
+    // meal.addEventListener('click', () => {
+    //     showMealInfo(mealData);
+    // })
 
     mealsEl.appendChild(meal);
+    return btn
 }
 
 function addMealLS(mealId) {
@@ -109,7 +115,7 @@ function addMealFav(mealData) {
     const favMeal = document.createElement('li');
 
     favMeal.innerHTML = `
-         <img src="${mealData.strMealThumb}" alt="${mealData.strMeal}"><span>${mealData.strMeal}</span>
+         <img class="fav-meal-img" src="${mealData.strMealThumb}" alt="${mealData.strMeal}"><span>${mealData.strMeal}</span>
          <button class="clear"><i class="fas fa-window-close"></i></button>
     `;
 
@@ -121,12 +127,23 @@ function addMealFav(mealData) {
         fetchFavMeals();
     });
 
-    favMeal.addEventListener('click', () => {
-        showMealInfo(mealData);
+
+
+    const favImage = favMeal.querySelector('.fav-meal-img');
+    favImage.addEventListener('click', () => {
+        showMealInfo(mealData)
     })
+
+
+    // favMeal.addEventListener('click', () => {
+    //     showMealInfo(mealData);
+    // })
 
     favoriteContainer.appendChild(favMeal);
 }
+
+
+
 
 function showMealInfo(mealData) {
     // clean it up
